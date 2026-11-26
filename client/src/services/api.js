@@ -1,16 +1,16 @@
 import axios from 'axios'
 
-// baseURL '/api' hai, vite proxy use backend (localhost:5000) tak pahunchata hai
+// baseURL is '/api'; the Vite proxy forwards it to the backend (localhost:5000)
 const api = axios.create({ baseURL: '/api' })
 
-// har request mein token apne aap lagta hai
+// attach the token to every request automatically
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token')
     if (token) config.headers.Authorization = `Bearer ${token}`
     return config
 })
 
-// token expire ho gaya to login page par bhej do (login ki apni galti par nahi)
+// if the token has expired, send the user to the login page (but not for a failed login attempt)
 api.interceptors.response.use(
     (res) => res,
     (err) => {
@@ -23,8 +23,8 @@ api.interceptors.response.use(
     },
 )
 
-// backend ka message nikalta hai, nahi mila to default
+// get the backend's error message, or a default one
 export const getError = (err) =>
-    err.response?.data?.message || (err.request ? 'Server se connect nahi ho pa raha' : 'Kuch galat ho gaya')
+    err.response?.data?.message || (err.request ? 'Cannot connect to the server' : 'Something went wrong')
 
 export default api

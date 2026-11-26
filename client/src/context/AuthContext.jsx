@@ -5,14 +5,12 @@ const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
-    // token hai tabhi loading shuru hoti hai, nahi to seedha login/home dikhta hai
+    // start in the loading state only if a saved token exists
     const [loading, setLoading] = useState(() => !!localStorage.getItem('token'))
 
-    // page khulte hi token se user ko pehchano
+    // identify the user from the saved token when the page opens
     useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            return;
-        }
+        if (!localStorage.getItem('token')) return
         api
             .get('/auth/me')
             .then((res) => setUser(res.data.user))

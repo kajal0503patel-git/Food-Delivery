@@ -10,9 +10,7 @@ export default function Register() {
     const [error, setError] = useState('')
     const [busy, setBusy] = useState(false)
 
-    if (user) {
-        return <Navigate to="/" replace />
-    }
+    if (user) return <Navigate to="/" replace />
 
     const change = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -39,12 +37,12 @@ export default function Register() {
             {error && <p className="mb-3 rounded bg-red-50 p-2 text-sm text-red-600">{error}</p>}
 
             <form onSubmit={handleSubmit} className="space-y-3">
-                <input name="name" placeholder="Naam" value={form.name} onChange={change} required className={input} />
+                <input name="name" placeholder="Name" value={form.name} onChange={change} required className={input} />
                 <input name="email" type="email" placeholder="Email" value={form.email} onChange={change} required className={input} />
                 <input
                     name="password"
                     type="password"
-                    placeholder="Password (kam se kam 6 akshar)"
+                    placeholder="Password (at least 6 characters)"
                     value={form.password}
                     onChange={change}
                     minLength={6}
@@ -53,8 +51,8 @@ export default function Register() {
                 />
                 <input name="phone" placeholder="Phone (optional)" value={form.phone} onChange={change} className={input} />
                 <select name="role" value={form.role} onChange={change} className={input}>
-                    <option value="customer">Main customer hoon</option>
-                    <option value="owner">Main restaurant owner hoon</option>
+                    <option value="customer">I'm a customer</option>
+                    <option value="owner">I'm a restaurant owner</option>
                 </select>
                 <button
                     disabled={busy}
@@ -65,9 +63,9 @@ export default function Register() {
             </form>
 
             <p className="mt-4 text-center text-sm text-gray-600">
-                Pehle se account hai?{' '}
+                Already have an account?{' '}
                 <Link to="/login" className="text-orange-600 hover:underline">
-                    Login karein
+                    Log in
                 </Link>
             </p>
         </div>

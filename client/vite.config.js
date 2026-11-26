@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
-// /api aur /socket.io ki requests backend (port 5000) ko bhej di jaati hain
+// forward /api and /socket.io requests to the backend (port 5000)
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
